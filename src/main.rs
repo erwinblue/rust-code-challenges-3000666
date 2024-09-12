@@ -1,5 +1,13 @@
-fn info(a: &T) {
-    todo!();
+use std::fmt::Debug;
+
+fn info<T: Debug + ?Sized>(a: &T) {
+    //todo!();
+    /*
+        Solution: Use Debug trait and add to generic parameter
+                  and use the println and/or  dbg macros
+     */
+    println!("{:?}", a);
+    //dbg!(a);
 }
 
 fn main() {
@@ -9,15 +17,15 @@ fn main() {
     info(&b);
 
     // Advanced 1
-    // use std::ffi::CString;
+    use std::ffi::CString;
     
-    // let c = CString::new("?").unwrap();
-    // info(&input);
+    let c = CString::new("?").unwrap();
+    info(&c);
 
     // Advanced 2
-    // use std::path::Path;
-    // let d = Path::new("/tmp/linkedin-learning");
-    // info(d);
+    use std::path::Path;
+    let d = Path::new("/tmp/linkedin-learning");
+    info(d);
 }
 
 
@@ -33,22 +41,22 @@ fn string() {
     info(&input);
 }
 
-// #[test]
-// fn chars() {
-//     let input = 'r';
-//     info(&input);
-// }
+#[test]
+fn chars() {
+    let input = 'r';
+    info(&input);
+}
 
-// #[test]
-// fn cstring() {
-//     use std::ffi::{CString};
-//     let input = CString::new("Rust").unwrap();
-//     info(&input);
-// }
+#[test]
+fn cstring() {
+    use std::ffi::{CString};
+    let input = CString::new("Rust").unwrap();
+    info(&input);
+}
 
-// #[test]
-// fn path() {
-//     use std::path::Path;
-//     let input = Path::new("/tmp/rust");
-//     info(input);
-// }
+#[test]
+fn path() {
+    use std::path::Path;
+    let input = Path::new("/tmp/rust");
+    info(input);
+}
