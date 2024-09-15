@@ -14,6 +14,59 @@ trait MorseCode {
     fn to_morse_code(&self) -> Message;
 }
 
+/* 
+    SOLUTION: Implement Morse code trait for String type
+ */
+impl MorseCode for String {
+    fn to_morse_code(&self) -> Message {
+        let mut m = Message::new();
+        for c in self.to_string().to_lowercase().chars().into_iter() {
+            let c_letter = match c {
+                'a' => vec![Pulse::Short, Pulse::Long],
+                'b' => vec![Pulse::Long, Pulse::Short, Pulse::Short, Pulse::Short],
+                'c' => vec![Pulse::Long, Pulse::Short, Pulse::Long, Pulse::Short],
+                'd' => vec![Pulse::Long, Pulse::Short, Pulse::Short],
+                'e' => vec![Pulse::Short],
+                'f' => vec![Pulse::Short, Pulse::Short, Pulse::Long, Pulse::Short],
+                'g' => vec![Pulse::Long, Pulse::Long, Pulse::Short],
+                'h' => vec![Pulse::Short, Pulse::Short, Pulse::Short, Pulse::Short],
+                'i' => vec![Pulse::Short, Pulse::Short],
+                'j' => vec![Pulse::Short, Pulse::Long, Pulse::Long, Pulse::Long],
+                'k' => vec![Pulse::Long, Pulse::Short, Pulse::Long],
+                'l' => vec![Pulse::Short, Pulse::Long, Pulse::Short, Pulse::Short],
+                'm' => vec![Pulse::Long, Pulse::Long],
+                'n' => vec![Pulse::Long, Pulse::Short],
+                'o' => vec![Pulse::Long, Pulse::Long, Pulse::Long],
+                'p' => vec![Pulse::Short, Pulse::Long, Pulse::Long, Pulse::Short],
+                'q' => vec![Pulse::Long, Pulse::Long, Pulse::Short, Pulse::Long],
+                'r' => vec![Pulse::Short, Pulse::Long, Pulse::Short],
+                's' => vec![Pulse::Short, Pulse::Short, Pulse::Short],
+                't' => vec![Pulse::Long],
+                'u' => vec![Pulse::Short, Pulse::Short, Pulse::Long],
+                'v' => vec![Pulse::Short, Pulse::Short, Pulse::Short, Pulse::Long],
+                'w' => vec![Pulse::Short, Pulse::Long, Pulse::Long],
+                'x' => vec![Pulse::Long, Pulse::Short, Pulse::Short, Pulse::Long],
+                'y' => vec![Pulse::Long, Pulse::Short, Pulse::Long, Pulse::Long],
+                'z' => vec![Pulse::Long, Pulse::Long, Pulse::Short, Pulse::Short],
+                '1' => vec![Pulse::Short, Pulse::Long, Pulse::Long, Pulse::Long, Pulse::Long],
+                '2' => vec![Pulse::Short, Pulse::Short, Pulse::Long, Pulse::Long, Pulse::Long],
+                '3' => vec![Pulse::Short, Pulse::Short, Pulse::Short, Pulse::Long, Pulse::Long],
+                '4' => vec![Pulse::Short, Pulse::Short, Pulse::Short, Pulse::Short, Pulse::Long],
+                '5' => vec![Pulse::Short, Pulse::Short, Pulse::Short, Pulse::Short, Pulse::Short],
+                '6' => vec![Pulse::Long, Pulse::Short, Pulse::Short, Pulse::Short, Pulse::Short],
+                '7' => vec![Pulse::Long, Pulse::Long, Pulse::Short, Pulse::Short, Pulse::Short],
+                '8' => vec![Pulse::Long, Pulse::Long, Pulse::Long, Pulse::Short, Pulse::Short],
+                '9' => vec![Pulse::Long, Pulse::Long, Pulse::Long, Pulse::Long, Pulse::Short],
+                '0' => vec![Pulse::Long, Pulse::Long, Pulse::Long, Pulse::Long, Pulse::Long],
+                // _ => vec![] // mine, not good
+                _ => continue // from author, this is better
+            };
+            m.push(c_letter)
+        }
+        return m;
+    }
+}
+
 impl std::fmt::Display for Pulse {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -41,15 +94,15 @@ fn main() {
     print_morse_code(&greeting);
 }
 
-
-impl std::fmt::Display for Pulse {
+/* Commented out below.  Redundant code  */
+/*impl std::fmt::Display for Pulse {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Short => write!(f, "."), 
             Self::Long => write!(f, "_"),
         }
     }
-}
+}*/
 
 #[test]
 fn hello_world() {
