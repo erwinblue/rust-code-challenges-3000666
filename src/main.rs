@@ -1,9 +1,23 @@
 fn sum_with_missing(numbers: Vec<Option<i32>>) -> i32 {
-    todo!();
+    //todo!();
+    /* 
+    // Solution 1
+    numbers.iter()
+        .filter(|x|x.is_some())
+        .map(|y|y.unwrap_or(0i32))
+        .reduce(|acc, e|acc + e)
+        .unwrap_or(0i32)
+    */
+    // Solution 2 
+    numbers.iter()
+        .map(|x|x.unwrap_or(0i32))
+        .sum()
 }
 
 fn main() {
-    println!("");
+    //println!("");
+    let nn: Vec<Option<i32>> = vec![Some(2), None, Some(5), None, None, Some(32)];
+    assert_eq!(sum_with_missing(nn), 39);
 }
 
 
