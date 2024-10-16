@@ -1,4 +1,6 @@
 use std::path;
+use std::fs;
+use tempfile;
 
 trait FileMetadata {
     fn exists(&self) -> bool;
@@ -10,20 +12,44 @@ trait FileMetadata {
 
 impl FileMetadata for path::Path {
     fn is_readable(&self) -> bool {
-        todo!();
+        //todo!();
+        let metadata = match fs::metadata(self) {
+            Ok(m) => m,
+            Err(e) => panic!("ERROR: Cannot read attributes of file {:?}\n{:?}", self.file_name(), e)
+        };
+        metadata.permissions().readonly()
     }
 
     fn is_writeable(&self) -> bool {
-        todo!();
+        //todo!();
+        let metadata = match fs::metadata(self) {
+            Ok(m) => m,
+            Err(e) => panic!("ERROR: Cannot read attributes of file {:?}\n{:?}", self.file_name(), e)
+        };
+        !metadata.permissions().readonly()
     }
 
     fn exists(&self) -> bool {
-        todo!();
+        //todo!();
+        let response = match self.try_exists() {
+            Ok(r) => r,
+            Err(e) => panic!("ERROR: Cannot find file {:?}\n{:?}", self.file_name(), e)
+        };
+        response
     }
 }
 
 fn main() {
-    // 
+
+    let f = tempfile::NamedTempFile::new().unwrap();
+    let mut perms = fs::metadata(f.path()).unwrap().permissions();
+    perms.set_readonly(true);
+    fs::set_permissions(f.path(), perms).unwrap();
+    if f.path().is_readable() {
+        println!("File {:?} is readable!", f);
+    }
+
+    //fs::remove_file(f.path()).unwrap();
 }
 
 #[test]
