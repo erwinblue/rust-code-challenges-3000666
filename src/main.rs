@@ -44,6 +44,7 @@ fn main() {
     use run_length_encoding::*;
     dbg!(encode("aabc"));
     dbg!(decode("2a1b1c"));
+    assert_eq!(decode(&encode("aabc")), "aabc");
 }
 
 #[test]
